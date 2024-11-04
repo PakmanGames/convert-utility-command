@@ -1,2 +1,2 @@
-convert: convert.c
-	gcc -o convert convert.c
+convert: convert.c messages.c messages.h
+	gcc -o convert convert.c messages.c
