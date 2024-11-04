@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "messages.h"
+#define MAX_BASE 36
+#define MIN_BASE 2
 
 int check_user_inputs(int argc, char *argv[], int *base, long *start, long *finish) {
     //convert -b 16 -r 1 5 // max is 6 arguments [1] is first flag which can be --help
@@ -10,7 +12,7 @@ int check_user_inputs(int argc, char *argv[], int *base, long *start, long *fini
             print_help();
         } else if (strcmp(argv[i], "-b") == 0) {
             if (i + 1 < argc) {
-                if (atoi(argv[i + 1]) >= 37) {
+                if (atoi(argv[i + 1]) > MAX_BASE || atoi(argv[i + 1]) < MIN_BASE) {
                     print_usage();
                     return EXIT_FAILURE;
                 } else {
