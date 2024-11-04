@@ -1,0 +1,34 @@
+name: CI - Test convert Utility
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Compile program
+    - run: make
+
+    - name: Test when no arguments are given
+      run: ./convert
+      continue-on-error: true
+
+    - name: Test when incorrect flag
+      run: ./convert -notarealflag
+      continue-on-error: true
+
+    - name: Test when invalid BASE given
+      run: ./convert -b 37
+      continue-on-error: true
+
+    - name: Test when incorrect -r flag format
+      run: ./convert -r 10
+      continue-on-error: true
+
+    - name: Test when -r START is greater than FINISH
+      run: ./convert -r 100 33
+      continue-on-error: true
