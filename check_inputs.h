@@ -1,0 +1,1 @@
+int check_user_inputs(int argc, char *argv[], int *base, long *start, long *finish);
