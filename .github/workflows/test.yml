@@ -13,8 +13,8 @@ jobs:
     - name: Compile program
       run: make
 
-    - name: Test when no arguments are given
-      run: ./convert
+    - name: Test when user enters non-long-int value
+      run: ./convert << "hi"
       continue-on-error: true
 
     - name: Test when incorrect flag
