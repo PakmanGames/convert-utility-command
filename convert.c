@@ -10,12 +10,8 @@
 #include "check_inputs.h"
 #define DEFAULT_BASE 16
 
-// TODO Function to read command line flags
-
-// TODO Recursively changing base with convert function
-
 void convert_by_recursion(long input, int base);
-void convert_by_range(long input, int base, int start, int finish);
+void convert_by_range(long input, int base, long start, long finish);
 
 int main(int argc, char *argv[]) {
     int base = DEFAULT_BASE;
@@ -26,8 +22,8 @@ int main(int argc, char *argv[]) {
     }
 
     long input;
-    int result;
-    while ((result = scanf("%ld", &input)) != EOF) {
+    int result = 1;
+    do {
         if (result == 1) {
             if (start == 0 && finish == 0) {
                 if (input == 0) {
@@ -37,13 +33,15 @@ int main(int argc, char *argv[]) {
                     printf("\n");
                 }
             } else {
+                printf("converting by range\n");
                 convert_by_range(input, base, start, finish);
+                return EXIT_SUCCESS;
             }
         } else if (result == 0) {
             printf("Error: Non-long-int token encountered.\n");
             return EXIT_FAILURE;
         }
-    }
+    } while ((result = scanf("%ld", &input)) != EOF);
 
     return EXIT_SUCCESS;
 }
@@ -61,6 +59,13 @@ void convert_by_recursion(long input, int base) {
     printf("%c", digits[input % base]);
 }
 
-void convert_by_range(long input, int base, int start, int finish) {
-    printf("not done\n");
+void convert_by_range(long input, int base, long start, long finish) {
+    for (long i = start; i <= finish; i++) {
+        if (i == 0) {
+            printf("0\n");
+            i++;
+        }
+        convert_by_recursion(i, base);
+        printf("\n");
+    }
 }
