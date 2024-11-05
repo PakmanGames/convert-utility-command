@@ -1,11 +1,23 @@
 #include <stdio.h>
 
+/**
+ * Prints to stdout the proper usage of the convert utility
+ * Arguments: none
+ * Outputs: Prints to stdout
+ * Returns: none
+ */
 void print_usage() {
     printf("Usage: convert [-b BASE] [-r START FINISH]\n");
     printf("       1 < BASE < 37\n");
     printf("       START and FINISH are long integers\n");
 }
 
+/**
+ * Prints to stdout the detailed help page
+ * Arguments: none
+ * Outputs: Prints to stdout
+ * Returns: none
+ */
 void print_help() {
     printf("Usage: convert [-b BASE] [-r START FINISH]\n");
     printf("\n");
