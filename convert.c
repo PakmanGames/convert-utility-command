@@ -8,10 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "check_inputs.h"
+#include "conversions.h"
 #define DEFAULT_BASE 16
-
-void convert_by_recursion(long input, int base);
-void convert_by_range(long input, int base, long start, long finish);
 
 int main(int argc, char *argv[]) {
     int base = DEFAULT_BASE;
@@ -22,9 +20,9 @@ int main(int argc, char *argv[]) {
     }
 
     long input;
-    int result = 1;
+    int result = 2;
     do {
-        if (result == 1) {
+        if (result == 1 || start != 0 && finish != 0) {
             if (start == 0 && finish == 0) {
                 if (input == 0) {
                     printf("0\n");
@@ -44,28 +42,4 @@ int main(int argc, char *argv[]) {
     } while ((result = scanf("%ld", &input)) != EOF);
 
     return EXIT_SUCCESS;
-}
-
-void convert_by_recursion(long input, int base) {
-    if (input == 0) {
-        return;
-    } else if (input < 0) {
-        printf("-");
-        input *= -1;
-    }
-
-    convert_by_recursion(input / base, base);
-    const char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    printf("%c", digits[input % base]);
-}
-
-void convert_by_range(long input, int base, long start, long finish) {
-    for (long i = start; i <= finish; i++) {
-        if (i == 0) {
-            printf("0\n");
-            i++;
-        }
-        convert_by_recursion(i, base);
-        printf("\n");
-    }
 }
