@@ -75,9 +75,35 @@ test() {
     echo "TC $tc Passed"
 }
 
-test './ctest' 'inp1.txt' 'ex_out1.txt' 'empty.txt'
-test './ctest -b 2' 'inp2.txt' 'ex_out2.txt' 'empty.txt'
-test './ctest -a' 'empty.txt' 'empty.txt' 'usage.txt'
+# Base 16
+test './convert' 'inp1.txt' 'ex_out1.txt' 'empty.txt'
+
+# Base 2
+test './convert -b 2' 'inp2.txt' 'ex_out2.txt' 'empty.txt'
+
+# Invalid usage
+test './convert -a' 'empty.txt' 'empty.txt' 'usage.txt'
+
+# Test range and base flag
+test './convert -b 2 -r -3 3' 'empty.txt' 'ex_out3.txt' 'empty.txt'
+
+# Test Incorrect range
+test './convert -r 10 0' 'empty.txt' 'empty.txt' 'empty.txt'
+
+# Test help flag
+test './convert --help' 'empty.txt' 'help.txt' 'empty.txt'
+
+# Testing invalid base
+test './convert -b 38' 'empty.txt' 'empty.txt' 'usage.txt'
+
+# Test no base given after base flag
+test './convert -b' 'empty.txt' 'empty.txt' 'usage.txt'
+
+# Test not long-int input
+test './convert' 'inp4.txt' 'ex_out4.txt' 'empty.txt'
+
+# Testing no range given
+test './convert -r' 'empty.txt' 'empty.txt' 'usage.txt'
 
 # clean up
 rm test_err.txt test_out.txt

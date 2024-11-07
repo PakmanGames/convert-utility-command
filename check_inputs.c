@@ -38,7 +38,7 @@ int check_user_inputs(int argc, char *argv[], int *base, long *start, long *fini
                 *finish = atol(argv[i + 2]);
                 i += 2;
                 if (*start > *finish) {
-                    return EXIT_FAILURE;
+                    return EXIT_SUCCESS;
                 }
             } else {
                 print_usage();

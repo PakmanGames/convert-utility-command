@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
                 return EXIT_SUCCESS;
             }
         } else if (result == 0) {
-            printf("Error: Non-long-int token encountered.\n");
+            fprintf(stderr, "Error: Non-long-int token encountered.\n");
             return EXIT_FAILURE;
         }
     } while ((result = scanf("%ld", &input)) != EOF); // Loop until EOF

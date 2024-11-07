@@ -1,0 +1,12 @@
+Usage: convert [-b BASE] [-r START FINISH]
+
+Arguments: 
+ BASE        The new radix (base) that inputs will be converted to.
+             Can range from 2 to 36 (inclusive), default value of 16
+ START       A long integer, representing the starting range
+ FINISH      A long integer, representing the ending range
+
+Flags: 
+ --help      A linux style help, the one you are currently reading
+ -b          Use specified BASE as conversion base
+ -r          Output conversions of integers in the specified START AND FINISH range
