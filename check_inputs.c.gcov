@@ -1,0 +1,57 @@
+        -:    0:Source:check_inputs.c
+        -:    0:Graph:check_inputs.gcno
+        -:    0:Data:check_inputs.gcda
+        -:    0:Runs:10
+        -:    1:#include <stdlib.h>
+        -:    2:#include <stdio.h>
+        -:    3:#include <string.h>
+        -:    4:#include "messages.h"
+        -:    5:#define MAX_BASE 36
+        -:    6:#define MIN_BASE 2
+        -:    7:
+        -:    8:/**
+        -:    9: * Check the user's input when they use convert command, assigns values based on flags
+        -:   10: * Arguments: int argc = number of arguments entered,
+        -:   11: *            char *argv[] = arguments / flags user enters with convert
+        -:   12: *            int *base = pointer to the base that will be used for the conversion
+        -:   13: *            long *start = pointer to start value if the range flag is indicated
+        -:   14: *            long *finish = pointer to end value if the range flag is indicated
+        -:   15: * Outputs: Outputs to stdout using functions from messages.c if invalid input or user uses --help flag
+        -:   16: * Return: 1 or 0 if the inputs are invalid or not
+        -:   17: */
+       10:   18:int check_user_inputs(int argc, char *argv[], int *base, long *start, long *finish) {
+       14:   19:    for (int i = 1; i < argc; i++) { // Loop through the arguments given
+        9:   20:        if (strcmp(argv[i], "--help") == 0) { // Check if the help flag indicated
+        1:   21:            print_help();
+        8:   22:        } else if (strcmp(argv[i], "-b") == 0) {
+        4:   23:            if (i + 1 < argc) { // Checks if the next argument after -b flag exists
+        3:   24:                if (atoi(argv[i + 1]) > MAX_BASE || atoi(argv[i + 1]) < MIN_BASE) {
+        1:   25:                    print_usage();
+        1:   26:                    return EXIT_FAILURE;
+        -:   27:                } else {
+        2:   28:                    *base = atoi(argv[i + 1]);
+        2:   29:                    i++;
+        -:   30:                }
+        -:   31:            } else {
+        1:   32:                print_usage();
+        1:   33:                return EXIT_FAILURE;
+        -:   34:            }
+        4:   35:        } else if (strcmp(argv[i], "-r") == 0) {
+        3:   36:            if (i + 2 < argc) { // Checks if the next two arguments after -r flag exists
+        2:   37:                *start = atol(argv[i + 1]);
+        2:   38:                *finish = atol(argv[i + 2]);
+        2:   39:                i += 2;
+        2:   40:                if (*start > *finish) {
+        1:   41:                    return EXIT_SUCCESS;
+        -:   42:                }
+        -:   43:            } else {
+        1:   44:                print_usage();
+        1:   45:                return EXIT_FAILURE;
+        -:   46:            }
+        -:   47:        } else {
+        1:   48:            print_usage();
+        1:   49:            return EXIT_FAILURE;
+        -:   50:        }
+        -:   51:    }
+        5:   52:    return EXIT_SUCCESS;
+        -:   53:}

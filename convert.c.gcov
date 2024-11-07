@@ -1,0 +1,57 @@
+        -:    0:Source:convert.c
+        -:    0:Graph:convert.gcno
+        -:    0:Data:convert.gcda
+        -:    0:Runs:9
+        -:    1:/**
+        -:    2: * convert function that converts numbers into specified base (16 by default),
+        -:    3: * takes input from stdin or goes through a specified range
+        -:    4: * Andy Pak, McMaster University, 2024
+        -:    5: * Additional sources used: manual page for scanf()
+        -:    6: */
+        -:    7:#include <stdlib.h>
+        -:    8:#include <stdio.h>
+        -:    9:#include <string.h>
+        -:   10:#include "check_inputs.h"
+        -:   11:#include "conversions.h"
+        -:   12:#define DEFAULT_BASE 16
+        -:   13:
+        -:   14:/**
+        -:   15: * Main function of the program
+        -:   16: * Arguments: int argc = number of arguments user enters with convert, char *argv[] arguments / flags user enters
+        -:   17: * Outputs: Outputs conversion results to stdout and errors to stderr
+        -:   18: * Returns: 1 or 0 if the program ends successfully or not
+        -:   19: */
+        9:   20:int main(int argc, char *argv[]) {
+        9:   21:    int base = DEFAULT_BASE;
+        9:   22:    long start = 0;
+        9:   23:    long finish = 0;
+        -:   24:
+        -:   25:    // Checks the user's input and assigns values based on flags
+        9:   26:    if (check_user_inputs(argc, argv, &base, &start, &finish) != 0) {
+        3:   27:        return EXIT_FAILURE;
+        -:   28:    }
+        -:   29:
+        -:   30:    long input;
+        6:   31:    int result = 2;
+        -:   32:    do {
+       24:   33:        if (result == 1 || start != 0 && finish != 0) {
+        -:   34:            // Determins which conversion function to use based on flag values
+       18:   35:            if (start == 0 && finish == 0) {
+       17:   36:                if (input == 0) {
+        1:   37:                    printf("0\n");
+        -:   38:                } else {
+       16:   39:                    convert_by_recursion(input, base);
+       16:   40:                    printf("\n");
+        -:   41:                }
+        -:   42:            } else {
+        1:   43:                convert_by_range(input, base, start, finish);
+        1:   44:                return EXIT_SUCCESS;
+        -:   45:            }
+        6:   46:        } else if (result == 0) {
+        1:   47:            fprintf(stderr, "Error: Non-long-int token encountered.\n");
+        1:   48:            return EXIT_FAILURE;
+        -:   49:        }
+       22:   50:    } while ((result = scanf("%ld", &input)) != EOF); // Loop until EOF
+        -:   51:
+        4:   52:    return EXIT_SUCCESS;
+        -:   53:}
